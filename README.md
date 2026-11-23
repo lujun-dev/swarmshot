@@ -65,6 +65,14 @@ python tools/assemble-film.py --a1 out/act1 --a2 out/act2 --out out/film.mp4 --a
 - 光标空转：锚点改为视口内随机点，偏离过远从边缘重新进场
 - 录制壳与合成流水线（`tools/` 三个文件）为新增
 
+## 用别人/自己复刻这一套：Skill
+
+`skill/swarm-shot-video/SKILL.md` 是一份可直接喂给 AI 编程工具的操作手册：选哪类页面、两幕怎么录、参数怎么调、合成与音效、各平台出片规格、以及踩过的坑。
+
+装法：把 `skill/swarm-shot-video/` 整个目录放进你的 skills 目录即可（Claude Code：`~/.claude/skills/`；Codex / 其他支持 AGENTS 的工具：把 SKILL.md 内容并入 `AGENTS.md`；Hermes：`~/.hermes/skills/<分类>/`）。
+
+装上之后，对 AI 说「用 swarm-shot-video 做一个 XX 网站的拆解视频」，它会照着这份手册跑。
+
 ## 成片
 
 - 横屏 30 秒：https://lujun-dev.github.io/swarmshot/assets/swarm-16x9.mp4
