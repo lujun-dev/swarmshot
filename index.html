@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SwarmShot — 20 个光标拆一个网站</title>
+<title>SwarmShot</title>
 <style>
   :root{ --bg:#0A0B0D; --fg:#E8EAED; --dim:#8A9099; --line:#1E2126; --accent:#5BC8F5; }
   *{box-sizing:border-box}
@@ -11,20 +11,23 @@
        font:16px/1.7 -apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
        -webkit-font-smoothing:antialiased}
   .wrap{max-width:1180px;margin:0 auto;padding:72px 24px 96px}
-  h1{font-size:34px;margin:0 0 10px;letter-spacing:-.02em}
+  h1{font-size:32px;margin:0 0 12px;letter-spacing:-.02em}
   h1 span{color:var(--accent)}
-  .sub{color:var(--dim);font-size:17px;margin:0 0 8px}
-  .meta{color:#5C626B;font-size:13px;margin:26px 0 40px;letter-spacing:.02em}
+  .sub{color:var(--dim);font-size:16px;margin:0 0 40px;max-width:720px}
   .grid{display:grid;grid-template-columns:1.78fr 1fr;gap:20px;align-items:start}
   figure{margin:0}
   video{width:100%;display:block;border-radius:10px;background:#000;border:1px solid var(--line)}
-  figcaption{color:var(--dim);font-size:13px;margin-top:10px}
-  .note{margin-top:56px;padding-top:26px;border-top:1px solid var(--line);color:var(--dim);font-size:14px}
-  .note b{color:var(--fg);font-weight:600}
-  .note p{margin:0 0 10px}
+  figcaption{color:#5C626B;font-size:13px;margin-top:10px}
+  h2{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#5C626B;
+     font-weight:600;margin:56px 0 14px}
+  ol{margin:0;padding-left:20px;color:var(--dim);font-size:15px}
+  ol li{margin:0 0 8px}
+  code{background:#12151A;border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:14px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
   @media (max-width:820px){
     .wrap{padding:44px 16px 64px}
-    h1{font-size:26px}
+    h1{font-size:24px}
     .grid{grid-template-columns:1fr}
   }
 </style>
@@ -32,25 +35,30 @@
 <body>
 <div class="wrap">
   <h1>Swarm<span>Shot</span></h1>
-  <p class="sub">20 个光标把 basecamp.com 拆成零件，再原样拼回去。</p>
-  <p class="meta">30 秒 · 一次录完 · 没有加速</p>
+  <p class="sub">集群光标把一个真实页面拆成块搬离，再按同一份蓝图重建，全程序化渲染，虚拟时钟逐帧录制，成片未变速</p>
 
   <div class="grid">
     <figure>
-      <video src="assets/swarm-16x9.mp4" controls playsinline preload="metadata" poster=""></video>
-      <figcaption>横屏 · 完整版 30 秒</figcaption>
+      <video src="assets/swarm-16x9.mp4" controls playsinline preload="metadata"></video>
+      <figcaption>1920×1080 · 30 s</figcaption>
     </figure>
     <figure>
-      <video src="assets/swarm-9x16.mp4" controls playsinline preload="metadata" poster=""></video>
-      <figcaption>竖屏 · 24 秒</figcaption>
+      <video src="assets/swarm-9x16.mp4" controls playsinline preload="metadata"></video>
+      <figcaption>1080×1920 · 24 s</figcaption>
     </figure>
   </div>
 
-  <div class="note">
-    <p><b>做了什么</b>：读出目标页面的图层结构，把每个元素变成一块可以搬动的碎片，交给 20 个模拟光标分头搬运；拆完之后再按同一份结构重新排回去。</p>
-    <p><b>怎么录的</b>：Canvas 逐帧录制，帧率锁 30，时钟由录制器驱动，所以画面和音效的每个落点都能对上。</p>
-    <p><b>工具</b>：DOM 图层解析 · 光标调度 · Canvas 录制 · ffmpeg 合成</p>
-  </div>
+  <h2>How it works</h2>
+  <ol>
+    <li>遍历 DOM 生成蓝图：rect、text layer、pen line、media、master/duplicate、guide</li>
+    <li>集群光标出巢，把块逐块搬离，资源条按类型计数</li>
+    <li>按同一份蓝图重建，任务自上而下解锁，代码窗行数跟随完成度</li>
+    <li>覆写 <code>performance.now</code>、<code>setTimeout</code>、<code>requestAnimationFrame</code> 为虚拟时钟，每 16.67 ms 截一帧</li>
+    <li><code>ffmpeg</code> 拼接两幕、转场、混音、封装</li>
+  </ol>
+
+  <h2>Source</h2>
+  <p class="sub" style="margin:0"><a href="https://github.com/lujun-dev/swarmshot">github.com/lujun-dev/swarmshot</a> — 引擎与流水线、操作手册 <code>skill/swarm-shot-video</code></p>
 </div>
 </body>
 </html>
